@@ -1,8 +1,9 @@
 #include "ports.h"
+#include "screen.h"
 
 static char last_key = 0;
 
-static const char keymap[128] =
+static const char map[128] =
 {
     0,27,'1','2','3','4','5','6',
     '7','8','9','0','-','=',
@@ -17,13 +18,17 @@ static const char keymap[128] =
 
 void keyboard_irq()
 {
-    unsigned char scancode = inb(0x60);
+    unsigned char sc = inb(0x60);
 
-    if(scancode < 128)
-        last_key = keymap[scancode];
+    if(sc < 128)
+    {
+        last_key = map[sc];
+    }
+
+    outb(0x20, 0x20);
 }
 
-char keyboard_get_last()
+char keyboard_read()
 {
     char c = last_key;
     last_key = 0;
