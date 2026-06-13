@@ -1,7 +1,8 @@
-`#ifndef KEYBOARD_H
+#ifndef KEYBOARD_H
 #define KEYBOARD_H
 
+void keyboard_init();
 void keyboard_irq();
-char keyboard_get_last();
+char keyboard_read();
 
 #endif
