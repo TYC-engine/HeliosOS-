@@ -3,17 +3,15 @@
 
 #include <stdint.h>
 
-typedef struct
-{
-    uint16_t offset_low;
-    uint16_t selector;
+typedef struct {
+    uint16_t low;
+    uint16_t sel;
     uint8_t zero;
     uint8_t flags;
-    uint16_t offset_high;
+    uint16_t high;
 } __attribute__((packed)) idt_entry_t;
 
-typedef struct
-{
+typedef struct {
     uint16_t limit;
     uint32_t base;
 } __attribute__((packed)) idt_ptr_t;
