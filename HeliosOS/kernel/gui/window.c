@@ -24,3 +24,24 @@ Window* window_create(int x, int y, int w, int h, const char* title)
 
     return win;
 }
+
+void window_draw(Window* win)
+{
+    if(!win->visible)
+        return;
+
+    // фон окна
+    for(int y = 0; y < win->h; y++)
+    {
+        for(int x = 0; x < win->w; x++)
+        {
+            win->buffer[y * win->w + x] = 0x2B2B2B;
+        }
+    }
+
+    // заголовок
+    for(int x = 0; x < win->w; x++)
+    {
+        win->buffer[x] = 0x1E90FF;
+    }
+}
