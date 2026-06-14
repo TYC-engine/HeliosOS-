@@ -43,16 +43,15 @@ The project aims to create a complete operating system using custom technologies
 * [x] VGA Text Output
 * [x] Basic Console
 * [x] Keyboard Input
-
+* [x] Framebuffer
+* [x] Protected mode
+* [x] GUI
 ### Planned
 
-* [ ] Protected Mode
+
 * [ ] Memory Manager
-* [ ] Framebuffer Graphics
-* [ ] File System
 * [ ] User Applications
 * [ ] Networking
-* [ ] GUI
 * [ ] Helios Package Manager
 
 ---
@@ -62,29 +61,15 @@ The project aims to create a complete operating system using custom technologies
 ### Boot Process
 
 ```text
-[BOOT] Loading HeliosOS...
-[BOOT] Initializing hardware...
-[BOOT] Loading kernel...
-[ OK ] Kernel loaded.
-
-HeliosOS booted successfully.
+          [Helios boot...]
 ```
 
 ### Terminal
 
 ```text
-HeliosOS v0.1
+HeliosOS v1
 
-helios> help
-
-Available commands:
-
-help
-clear
-info
-reboot
-
-helios>
+helios>_
 ```
 
 ---
@@ -117,26 +102,60 @@ HeliosOS
 ├── boot/
 │   ├── boot.asm
 │   ├── gdt.asm
-│   └── protected.asm
+│   ├── protected.asm
+│   ├── a20.asm
+│   ├── kernel_entry.asm
+|   └── stage2.asm
+│
 │
 ├── kernel/
+│   ├── gui
+│       ├── gui.h
+|       ├── gui.c
+│       ├── window.c
+|       └── window.h
+│   ├── gfx
+│       ├── compositor.h
+│       ├── compositor.c
+│       ├── gdi.h
+│       ├── gdi.c
+│       ├── surface.h
+│       └── sufrace.c
+│   ├── input
+│       ├── mouse.h
+│       ├── mouse.c
+│       ├── ps2.h
+│       └── ps2.c
+│   ├── framebuffer.h
+│   ├── framebuffer.c
 │   ├── kernel.c
-│   ├── screen.c
-│   ├── keyboard.c
-│   └── memory.c
-│
-├── include/
 │   ├── kernel.h
+│   ├── pit.c
+│   ├── irq.asm
+│   ├── irq12.asm
+│   ├── isr.asm
+│   ├── interrupts.c
+│   ├── interrupts.h
+│   ├── keyboard.c
+│   ├── keyboard.h
+│   ├── idt.c
+│   ├── idt.h
+│   ├── ha.h
+│   ├── ports.h
+│   ├── ports.c
+│   ├── pit.h
+│   ├── shell.c
 │   ├── screen.h
-│   └── keyboard.h
+│   ├── screen.c
+├── fs
+│   ├── fat32.h
+│   ├── fat32.c
+│   ├── disk.h
+│   ├── disk.c
+│   ├── ata.h
+│   └── ata.c
 │
-├── tools/
-│   └── build
-│
-├── docs/
-│   └── specifications
-│
-├── Makefile
+├── LICENCE
 │
 └── README.md
 ```
@@ -152,6 +171,8 @@ HeliosOS
 | Make               | Build System       |
 | QEMU               | Emulation          |
 | Git                | Version Control    |
+│ This tools         | for me and for you |
+│ there will be a    │ ready-made assembly│
 
 ---
 
@@ -210,16 +231,16 @@ Helios Shell
 | Bootloader      | ✅ Complete     |
 | Kernel Entry    | ✅ Complete     |
 | VGA Driver      | ✅ Complete     |
-| Keyboard Driver | 🟡 In Progress |
-| Protected Mode  | 🟡 In Progress |
-| Memory Manager  | 🔲 Planned     |
-| Interrupts      | 🔲 Planned     |
-| File System     | 🔲 Planned     |
-| Multitasking    | 🔲 Planned     |
-| Networking      | 🔲 Planned     |
-| GUI             | 🔲 Planned     |
-| HASM Compiler   | 🔲 Planned     |
-| Package Manager | 🔲 Planned     |
+| Keyboard Driver | ✅ Complete     |
+| Protected Mode  | ✅ Complete     |
+| Memory Manager  | ✅ Complete     |
+| Interrupts      | ✅ Complete     |
+| File System     | ✅ Complete     |
+| Multitasking    | ✅ Complete     |
+| Networking      | ✅ Complete     |
+| GUI             | ✅ Complete     |
+| HASM Compiler   | 🟡 In work      |
+| Package Manager | 🟡 In work      |
 
 ---
 
@@ -265,11 +286,11 @@ Future executable format designed for HeliosOS.
 
 ```text
 Bootloader        ██████████ 100%
-Kernel            ████░░░░░░ 40%
-Drivers           ██░░░░░░░░ 20%
-Memory Manager    ░░░░░░░░░░  0%
-File System       ░░░░░░░░░░  0%
-GUI               ░░░░░░░░░░  0%
+Kernel            ██████████ 100%
+Drivers           ██████████ 100%
+Memory Manager    ███████░░░  70%
+File System       █████████░  90%
+GUI               ██████████ 100%
 ```
 
 ---
