@@ -10,22 +10,33 @@ typedef struct
 
     uint16_t bytes_per_sector;
     uint8_t sectors_per_cluster;
+
     uint16_t reserved_sectors;
     uint8_t fat_count;
 
     uint16_t root_entries;
     uint16_t total_sectors16;
+
     uint8_t media;
+
     uint16_t fat_size16;
 
     uint16_t sectors_per_track;
     uint16_t heads;
+
     uint32_t hidden_sectors;
     uint32_t total_sectors32;
 
     uint32_t fat_size32;
+
     uint16_t flags;
     uint16_t version;
+
+    uint32_t root_cluster;
+
+} __attribute__((packed))
+FAT32_BPB;
+
 typedef struct
 {
     char name[11];
@@ -50,12 +61,9 @@ typedef struct
 
     uint32_t size;
 
-} __attribute__((packed)) FAT32_DirEntry;
-    uint32_t root_cluster;
+} __attribute__((packed))
+FAT32_DirEntry;
 
-} __attribute__((packed)) FAT32_BPB;
-
-int fat32_init(void);
-uint32_t fat32_cluster_to_lba(uint32_t cluster);
+int fat32_init();
 
 #endif
