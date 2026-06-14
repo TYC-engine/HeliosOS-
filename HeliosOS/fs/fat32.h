@@ -1,4 +1,3 @@
-
 #ifndef FAT32_H
 #define FAT32_H
 
@@ -27,7 +26,31 @@ typedef struct
     uint32_t fat_size32;
     uint16_t flags;
     uint16_t version;
+typedef struct
+{
+    char name[11];
 
+    uint8_t attr;
+
+    uint8_t reserved;
+
+    uint8_t creation_tenths;
+
+    uint16_t creation_time;
+    uint16_t creation_date;
+
+    uint16_t access_date;
+
+    uint16_t cluster_high;
+
+    uint16_t write_time;
+    uint16_t write_date;
+
+    uint16_t cluster_low;
+
+    uint32_t size;
+
+} __attribute__((packed)) FAT32_DirEntry;
     uint32_t root_cluster;
 
 } __attribute__((packed)) FAT32_BPB;
