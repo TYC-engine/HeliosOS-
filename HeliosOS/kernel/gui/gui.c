@@ -1,30 +1,19 @@
-#define VGA_MEMORY ((unsigned short*)0xB8000)
+#include "gui.h"
+#include "../gfx/compositor.h"
+#include <stdlib.h>
 
-static int cursor_x=0;
-static int cursor_y=0;
+#define MAX_WINDOWS 32
 
-void putchar(char c)
+static Window* windows[MAX_WINDOWS];
+static int window_count = 0;
+
+void gui_init()
 {
-    if(c=='\n')
-    {
-        cursor_x=0;
-        cursor_y++;
-        return;
-    }
-
-    VGA_MEMORY[cursor_y*80+cursor_x]=(0x0F<<8)|c;
-
-    cursor_x++;
-
-    if(cursor_x>=80)
-    {
-        cursor_x=0;
-        cursor_y++;
-    }
+    window_count = 0;
 }
 
-void print(const char* s)
+void gui_add_window(Window* win)
 {
-    while(*s)
-        putchar(*s++);
+    if(window_count < MAX_WINDOWS)
+        windows[window_count++] = win;
 }
