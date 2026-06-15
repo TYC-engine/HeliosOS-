@@ -1,10 +1,17 @@
-#pragma once
+#ifndef IMAGE_H
+#define IMAGE_H
+
+#include <stdint.h>
+#include <stddef.h>
 
 typedef struct {
-    int width;
-    int height;
-    unsigned char* data; // RGBA8888
-} Image;
+    uint32_t width;
+    uint32_t height;
+    uint32_t* pixels; // RGBA
+} image_t;
 
-Image* load_image(const char* path);
-void free_image(Image* img);
+image_t* load_bmp(const void* data);
+void draw_image(image_t* img, int x, int y);
+void free_image(image_t* img);
+
+#endif
